@@ -21,6 +21,8 @@ import Embed from 'ndla-ui/es/icons/Embed';
 import OpenWindow from 'ndla-ui/es/icons/OpenWindow';
 import Time from 'ndla-ui/es/icons/Time';
 import User from 'ndla-ui/es/icons/User';
+import Pencil from 'ndla-ui/es/icons/Pencil';
+import Path from 'ndla-ui/es/icons/Path';
 
 function Icon(props) {
   const { icon, ...rest } = props;
@@ -42,5 +44,7 @@ Icon.Embed = props => <Icon {...props} icon={Embed} />;
 Icon.OpenWindow = props => <Icon {...props} icon={OpenWindow} />;
 Icon.Time = props => <Icon {...props} icon={Time} />;
 Icon.User = props => <Icon {...props} icon={User} />;
+Icon.Pencil = props => <Icon {...props} icon={Pencil} />;
+Icon.Path = props => <Icon {...props} icon={Path} />;
 
 export default Icon;

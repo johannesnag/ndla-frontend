@@ -11,7 +11,8 @@ import PropTypes from 'prop-types';
 import BEMHelper from 'react-bem-helper';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { ResourceList } from 'ndla-ui';
+import ResourceList from './ResourceList';
+import resourceTypeMapping from './resourceTypeMapping';
 import { ResourceTypeShape } from '../../shapes';
 import { getResourceTypesByTopicId } from './resourceSelectors';
 import { resourceToLinkProps as resourceToLinkPropsHelper } from './resourceHelpers';
@@ -20,6 +21,28 @@ const resClasses = new BEMHelper({
   name: 'resource-group',
   prefix: 'c-',
 });
+
+const ResourceType = ({ type, resourceToLinkProps }) => {
+  const { icon, className } = resourceTypeMapping(type.id);
+  return (
+    <div key={type.id} {...resClasses('', className)}>
+      <h1 className="c-resources__title">{type.name}</h1>
+      <ResourceList
+        icon={icon}
+        resourceToLinkProps={resourceToLinkProps}
+        resources={type.resources.map(resource => ({
+          ...resource,
+          type: type.name,
+        }))}
+      />
+    </div>
+  );
+};
+
+ResourceType.propTypes = {
+  type: ResourceTypeShape.isRequired,
+  resourceToLinkProps: PropTypes.func.isRequired,
+};
 
 class Resources extends Component {
   componentWillMount() {}
@@ -35,19 +58,11 @@ class Resources extends Component {
     return (
       <div>
         {topicResourcesByType.map(type =>
-          <div
+          <ResourceType
             key={type.id}
-            {...resClasses('', [(type.name.replace(/æ/g, ''): '')])}>
-            <h1 className="c-resources__title">{type.name}</h1>
-            <ResourceList
-              type={type.name}
-              resourceToLinkProps={resourceToLinkProps}
-              resources={type.resources.map(resource => ({
-                ...resource,
-                type: type.name,
-              }))}
-            />
-          </div>,
+            type={type}
+            resourceToLinkProps={resourceToLinkProps}
+          />,
         )}
       </div>
     );
