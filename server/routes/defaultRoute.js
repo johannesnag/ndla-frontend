@@ -26,15 +26,7 @@ const renderHtmlString = (
   userAgentString,
   state = {},
   component = undefined,
-) =>
-  renderToString(
-    <Html
-      lang={locale}
-      state={state}
-      component={component}
-      className={getConditionalClassnames(userAgentString)}
-    />,
-  );
+) => Html(locale, state, component, getConditionalClassnames(userAgentString));
 
 export function defaultRoute(req, res, token) {
   storeAccessToken(token.access_token);
